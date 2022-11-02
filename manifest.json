@@ -1,25 +1,33 @@
 {
-  "format_version": 1,
+  "format_version": 2,
   "header": {
     "name": "Universe 9 - Money System Behaviors",
     "description": "This module will provide Universe 9 with a currency system.",
     "uuid": "2580b16a-04e7-4cfc-9486-7c7c689f4162",
-    "version": [
-      1,
-      0,
-      0
-    ]
+    "version": [1, 0, 0],
+    "min_engine_version": [1, 16, 210]
+
   },
   "modules": [
     {
       "description": "behaviours for Universe 9 - Money System",
-      "type": "client_data",
+      "type": "data",
       "uuid": "db072bdf-7789-4ed9-a2f5-20f87e116583",
-      "version": [
-        1,
-        0,
-        0
-      ]
+      "version": [1, 0, 0]
+    },
+    {
+      "uuid": "da4f69bd-1e41-46c0-911e-184253a3acf3",
+      "version": [1, 0, 0],
+      "type": "script",
+      "language": "javascript",
+      "entry": "scripts/index.js"
     }
+    
+  ],
+  "dependencies": [
+		{
+			"module_name": "mojang-minecraft",
+			"version": "1.0.0-beta"
+		}
   ]
 }
