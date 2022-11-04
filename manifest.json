@@ -22,7 +22,6 @@
       "language": "javascript",
       "entry": "scripts/index.js"
     }
-    
   ],
   "dependencies": [
 		{

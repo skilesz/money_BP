@@ -1,0 +1,26 @@
+{
+	"format_version": "1.19.40",
+	"minecraft:item": {
+		"description": {
+            "identifier": "money:wallet",
+            "category": "Items"
+        },
+		"components": {
+            "minecraft:max_stack_size": 1,
+            "minecraft:icon": {
+                "texture": "money.wallet"
+            },
+            "minecraft:on_use": {
+                "on_use": {
+                    "event": "on_use",
+                    "target": "self"
+                }
+            }
+        },
+        "events": {
+            "on_use": {
+                
+            }
+        }
+	}
+}

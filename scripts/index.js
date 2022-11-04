@@ -1,16 +1,17 @@
-// This file demonstrates that the code is working by
-// Spamming the chat with "Hello World"
- 
-// Import world component from "@minecraft/server"
-import { world } from '@minecraft/server';
+import { Items, ItemStack, world } from '@minecraft/server';
 
-world.events.beforeChat.subscribe(async (eventData) => {
-	const player = eventData.sender;
-	switch (eventData.message) {
-		case '!wallet':
-			eventData.cancel = true;
-			await player.runCommandAsync('give @s minecraft:glass');
-			break;
-		default: break;
-	}
+
+// Event listeners
+
+// !wallet command to listen/give player a wallet
+world.events.beforeChat.subscribe((eventData) => {
+    const player = eventData.sender;
+    switch (eventData.message) {
+        case '!wallet':
+            eventData.cancel = true;
+            player.getComponent('inventory').container.addItem(new ItemStack(Items.get("money:wallet"), 1, 0));
+            break;
+        default: break;
+    }
 });
+
