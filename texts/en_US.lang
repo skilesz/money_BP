@@ -1,3 +1,9 @@
 pack.name=Universe 9 - Money System Behaviors
 pack.description=A Money System
 item.money:wallet=Wallet
+item.money:governor_job=Job: Governor
+item.money:construction_job=Job: Construction
+item.money:technology_job=Job: Technology
+item.money:planner_job=Job: Planner
+item.money:farmer_job=Job: Farmer
+item.money:interior_job=Job: Interior

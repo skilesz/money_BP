@@ -27,6 +27,10 @@
 		{
 			"module_name": "mojang-minecraft",
 			"version": "1.0.0-beta"
+		},
+    {
+			"module_name": "mojang-minecraft-ui",
+			"version": "1.0.0-beta"
 		}
   ]
 }
