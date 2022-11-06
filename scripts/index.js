@@ -39,7 +39,7 @@ world.events.beforeItemUse.subscribe((eventData) => {
             parts.forEach(part => {
                 if (part.displayName === source.name) {
                     var money = world.scoreboard.getObjective('money').getScore(part);
-                    world.getDimension('minecraft:overworld').runCommand('msg ' + source.name + ' You have §a§l$' + money + '§r!');
+                    // world.getDimension('minecraft:overworld').runCommand('msg ' + source.name + ' You have §a§l$' + money + '§r!');
 
                     // Define forms
                     let walletForm = new ActionFormData();
@@ -48,9 +48,15 @@ world.events.beforeItemUse.subscribe((eventData) => {
                     walletForm.button('Spend', 'textures/items/Wallet Item Icon');
                     walletForm.button('Transfer', 'textures/items/pack_icon');
 
-                    let walletModalForm = new ModalFormData();
-                    walletModalForm.title('§6§lSpend Money');
-                    walletModalForm.textField('Amount', 'Amount to Spend');
+                    let walletSpendForm = new ModalFormData();
+                    walletSpendForm.title('§6§lSpend Money');
+                    walletSpendForm.textField('Amount', 'Amount to Spend');
+                    
+                    let walletTransferForm = new ModalFormData();
+                    walletTransferForm.title('§6§lTransfer Money');
+                    walletTransferForm.textField('Amount', 'Amount to Transfer');
+                    walletTransferForm.textField('Recipient', 'Who To Transfer To');
+
 
                     // Wallet form
                     walletForm.show(source).then(r => {
@@ -60,25 +66,40 @@ world.events.beforeItemUse.subscribe((eventData) => {
                         switch (response) {
                             case 0:
                                 // Spend money
-                                walletModalForm.show(source).then(r => {
+                                walletSpendForm.show(source).then(r => {
                                     if (r.isCanceled) return;
 
-                                    let spend = r.formValues[0];
-                                    try {
-                                        spend = parseInt(spend);
-                                    } catch (e) {
-                                        console.log('ERR: Invalid spend amount');
+                                    let [ spend ] = r.formValues;
+                                    spend = parseInt(spend);
+                                    if (Number.isNaN(spend)) return;
+                                    if (spend > 1000 + money) {
+                                        world.getDimension('minecraft:overworld').runCommand('w ' + source.name + ' §c§lInsufficient funds')
                                         return;
                                     }
-
-                                    world.say('You spent §a§l$' + spend + '§r!');
+                                    source.runCommand('scoreboard players remove @s money ' + spend);
+                                    world.say('§l' + source.name + ' §rspent §a§l$' + spend + '§r!');
                                 }).catch (e => {
                                     console.error(e, e.stack);
                                 });
                                 break;
                             case 1:
                                 // Transfer money
-                                
+                                walletTransferForm.show(source).then(r => {
+                                    if (r.isCanceled) return;
+
+                                    let [ spend, recipient ] = r.formValues;
+                                    spend = parseInt(spend);
+                                    if (Number.isNaN(spend)) return;
+                                    if (spend > 1000 + money) {
+                                        world.getDimension('minecraft:overworld').runCommand('w ' + source.name + ' §c§lInsufficient funds')
+                                        return;
+                                    }
+                                    source.runCommand('scoreboard players remove @s money ' + spend);
+                                    source.runCommand('scoreboard players add ' + recipient + ' money ' + spend);
+                                    world.say('§l' + source.name + ' §rtransferred §a§l$' + spend + ' §rto §l' + recipient + '§r!');
+                                }).catch (e => {
+                                    console.error(e, e.stack);
+                                });
                                 break;
                             default:
                                 break;
@@ -98,7 +119,7 @@ world.events.beforeItemUse.subscribe((eventData) => {
 // ON-TICK
 world.events.tick.subscribe((eventData) => {
     // Every Minecraft day
-    if (eventData.currentTick % 400 === 0) {
+    if (eventData.currentTick % 24000 === 0) {
         // Give job money
         var players = Array.from(world.getPlayers());
         players.forEach(async player => {
