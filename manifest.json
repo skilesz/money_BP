@@ -10,7 +10,7 @@
   },
   "modules": [
     {
-      "description": "behaviours for Universe 9 - Money System",
+      "description": "Behaviors for Universe 9 - Money System",
       "type": "data",
       "uuid": "db072bdf-7789-4ed9-a2f5-20f87e116583",
       "version": [1, 0, 0]
