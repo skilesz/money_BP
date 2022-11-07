@@ -1,3 +1,3 @@
 # money_BP
 
-This repository is for the money addon of Universe 9.
+A money system for Universe 9!
