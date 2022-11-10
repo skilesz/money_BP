@@ -115,11 +115,18 @@ world.events.beforeItemUse.subscribe((eventData) => {
     }
 });
 
+// Listen for world initialization
+world.events.worldInitialize.subscribe(eventData => {
+    if (world.scoreboard.getObjective('money') === null) {
+        world.scoreboard.addObjective('money', 'Money');
+    }
+});
+
 
 // ON-TICK
 world.events.tick.subscribe((eventData) => {
     // Every Minecraft day
-    if (eventData.currentTick % 24000 === 0) {
+    if (eventData.currentTick % 100 === 0) {
         // Give job money
         var players = Array.from(world.getPlayers());
         players.forEach(async player => {
@@ -149,7 +156,7 @@ world.events.tick.subscribe((eventData) => {
                             player.runCommand('scoreboard players add @s money ' + wages.farmer);
                             player.runCommand('titleraw @s actionbar {"rawtext":[{"text":"§l§6FARMER"},{"text":"§r: "},{"text":"§aYou\'ve received $360!"}]}');
                             break;
-                        case 'money:farmer_job':
+                        case 'money:interior_job':
                             player.runCommand('scoreboard players add @s money ' + wages.interior);
                             player.runCommand('titleraw @s actionbar {"rawtext":[{"text":"§l§6INTERIOR"},{"text":"§r: "},{"text":"§aYou\'ve received $400!"}]}');
                             break;
@@ -162,3 +169,24 @@ world.events.tick.subscribe((eventData) => {
         world.say('§6§l[MONEY]: §rPay distributed!');
     }
 });
+
+
+// HELPER FUNCTIONS
+
+// Sleep
+function sleep(callback, delay = 1) {
+    if (delay < 1) {
+      Promise.resolve().then(callback);
+      return;
+    }
+    const n = Math.floor(delay);
+    let i = 0;
+    (function tick() {
+      i++;
+      if (i >= n) {
+        system.run(callback);
+        return;
+      }
+      system.run(tick);
+    })();
+}
