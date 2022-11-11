@@ -126,7 +126,7 @@ world.events.worldInitialize.subscribe(eventData => {
 // ON-TICK
 world.events.tick.subscribe((eventData) => {
     // Every Minecraft day
-    if (eventData.currentTick % 100 === 0) {
+    if (eventData.currentTick % 24000 === 0) {
         // Give job money
         var players = Array.from(world.getPlayers());
         players.forEach(async player => {
