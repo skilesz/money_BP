@@ -5,8 +5,8 @@
     "description": "This module will provide Universe 9 with a currency system.",
     "uuid": "2580b16a-04e7-4cfc-9486-7c7c689f4162",
     "version": [1, 0, 0],
-    "min_engine_version": [1, 19, 40]
-
+    "min_engine_version": [1, 19, 41],
+    "base_game_version": [1, 19, 41]
   },
   "modules": [
     {
